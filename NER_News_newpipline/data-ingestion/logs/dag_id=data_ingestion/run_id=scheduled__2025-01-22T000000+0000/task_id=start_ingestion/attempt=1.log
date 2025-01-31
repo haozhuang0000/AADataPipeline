@@ -1,0 +1,62 @@
+[2025-01-23T03:05:15.027+0000] {taskinstance.py:1087} INFO - Dependencies all met for <TaskInstance: data_ingestion.start_ingestion scheduled__2025-01-22T00:00:00+00:00 [queued]>
+[2025-01-23T03:05:15.034+0000] {taskinstance.py:1087} INFO - Dependencies all met for <TaskInstance: data_ingestion.start_ingestion scheduled__2025-01-22T00:00:00+00:00 [queued]>
+[2025-01-23T03:05:15.035+0000] {taskinstance.py:1283} INFO - 
+--------------------------------------------------------------------------------
+[2025-01-23T03:05:15.035+0000] {taskinstance.py:1284} INFO - Starting attempt 1 of 2
+[2025-01-23T03:05:15.035+0000] {taskinstance.py:1285} INFO - 
+--------------------------------------------------------------------------------
+[2025-01-23T03:05:15.094+0000] {taskinstance.py:1304} INFO - Executing <Task(PythonOperator): start_ingestion> on 2025-01-22 00:00:00+00:00
+[2025-01-23T03:05:15.102+0000] {standard_task_runner.py:55} INFO - Started process 447 to run task
+[2025-01-23T03:05:15.116+0000] {standard_task_runner.py:82} INFO - Running: ['***', 'tasks', 'run', 'data_ingestion', 'start_ingestion', 'scheduled__2025-01-22T00:00:00+00:00', '--job-id', '8', '--raw', '--subdir', 'DAGS_FOLDER/ingestion/dags/news.py', '--cfg-path', '/tmp/tmp8l6zzk7l']
+[2025-01-23T03:05:15.118+0000] {standard_task_runner.py:83} INFO - Job 8: Subtask start_ingestion
+[2025-01-23T03:05:15.238+0000] {logging_mixin.py:137} WARNING - /home/***/.local/lib/python3.10/site-packages/***/settings.py:249 DeprecationWarning: The sql_alchemy_conn option in [core] has been moved to the sql_alchemy_conn option in [database] - the old setting has been used, but please update your config.
+[2025-01-23T03:05:15.254+0000] {logging_mixin.py:137} WARNING - /home/***/.local/lib/python3.10/site-packages/***/utils/sqlalchemy.py:121 DeprecationWarning: The sql_alchemy_conn option in [core] has been moved to the sql_alchemy_conn option in [database] - the old setting has been used, but please update your config.
+[2025-01-23T03:05:15.279+0000] {task_command.py:389} INFO - Running <TaskInstance: data_ingestion.start_ingestion scheduled__2025-01-22T00:00:00+00:00 [running]> on host 01ffd301dd0f
+[2025-01-23T03:05:15.977+0000] {taskinstance.py:1511} INFO - Exporting the following env vars:
+AIRFLOW_CTX_DAG_OWNER=***
+AIRFLOW_CTX_DAG_ID=data_ingestion
+AIRFLOW_CTX_TASK_ID=start_ingestion
+AIRFLOW_CTX_EXECUTION_DATE=2025-01-22T00:00:00+00:00
+AIRFLOW_CTX_TRY_NUMBER=1
+AIRFLOW_CTX_DAG_RUN_ID=scheduled__2025-01-22T00:00:00+00:00
+[2025-01-23T03:05:30.211+0000] {logging_mixin.py:137} WARNING - /home/***/.local/lib/python3.10/site-packages/spacy/util.py:910 UserWarning: [W095] Model 'en_pipeline' (0.0.0) was trained with spaCy v3.2.0 and may not be 100% compatible with the current version (3.7.6). If you see errors or degraded performance, download a newer compatible model or retrain your custom model with the current spaCy version. For more details and available updates, run: python -m spacy validate
+[2025-01-23T03:06:10.362+0000] {logging_mixin.py:137} WARNING - 2025-01-23 03:06:10,362 - INFO - main.py -   Text processed 100 documents
+[2025-01-23T03:06:10.362+0000] {main.py:34} INFO - Text processed 100 documents
+[2025-01-23T03:06:10.374+0000] {logging_mixin.py:137} WARNING - 2025-01-23 03:06:10,374 - INFO - main.py -   Split sentence 100 documents
+[2025-01-23T03:06:10.374+0000] {main.py:41} INFO - Split sentence 100 documents
+[2025-01-23T03:06:10.525+0000] {milvus_client.py:658} DEBUG - Created new connection using: 0668fab8c2be476dacc70f3f2f5b52af
+[2025-01-23T03:06:10.526+0000] {logging_mixin.py:137} WARNING - /home/***/.local/lib/python3.10/site-packages/pymongo/synchronous/mongo_client.py:2554 UserWarning: MongoClient opened before fork. May not be entirely fork-safe, proceed with caution. See PyMongo's documentation for details: https://www.mongodb.com/docs/languages/python/pymongo-driver/current/faq/#is-pymongo-fork-safe-
+[2025-01-23T03:06:12.574+0000] {logging_mixin.py:137} WARNING - 2025-01-23 03:06:12,574 - ERROR - main.py -   Failed to process data with error: MongoDB 连接失败: Request failed with status code 500Please contact the server admin.
+[2025-01-23T03:06:12.574+0000] {main.py:50} ERROR - Failed to process data with error: MongoDB 连接失败: Request failed with status code 500Please contact the server admin.
+[2025-01-23T03:06:12.574+0000] {taskinstance.py:1772} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/opt/airflow/dags/ingestion/processing/Mapping/generate_mapping_company.py", line 744, in run
+    [self.batch_helper(batch) for batch in split_iter(split_sentence_records, 20)]
+  File "/opt/airflow/dags/ingestion/processing/Mapping/generate_mapping_company.py", line 744, in <listcomp>
+    [self.batch_helper(batch) for batch in split_iter(split_sentence_records, 20)]
+  File "/opt/airflow/dags/ingestion/processing/Mapping/generate_mapping_company.py", line 719, in batch_helper
+    sub_result = self.calculate_similarity(pair, 0.9)
+  File "/opt/airflow/dags/ingestion/processing/Mapping/generate_mapping_company.py", line 530, in calculate_similarity
+    results = self.vectorsearch(
+  File "/opt/airflow/dags/ingestion/processing/VDB_Similarity_Search/VDB_Common.py", line 81, in vectorsearch
+    raise ConnectionError(
+ConnectionError: Request failed with status code 500Please contact the server admin.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.10/site-packages/airflow/operators/python.py", line 175, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.10/site-packages/airflow/operators/python.py", line 192, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/ingestion/main.py", line 45, in manage_data_processing
+    upsert[DEFAULT_SELECTED_SENTENCE_COLLECTION] = run_similarity_search(
+  File "/opt/airflow/dags/ingestion/processing/run_similarity_search.py", line 56, in run_similarity_search
+    return similarity_map.run(message_data)
+  File "/opt/airflow/dags/ingestion/processing/Mapping/generate_mapping_company.py", line 747, in run
+    raise Exception(f"MongoDB 连接失败: {e}")
+Exception: MongoDB 连接失败: Request failed with status code 500Please contact the server admin.
+[2025-01-23T03:06:12.586+0000] {taskinstance.py:1322} INFO - Marking task as UP_FOR_RETRY. dag_id=data_ingestion, task_id=start_ingestion, execution_date=20250122T000000, start_date=20250123T030515, end_date=20250123T030612
+[2025-01-23T03:06:12.723+0000] {standard_task_runner.py:100} ERROR - Failed to execute job 8 for task start_ingestion (MongoDB 连接失败: Request failed with status code 500Please contact the server admin.; 447)
+[2025-01-23T03:06:12.795+0000] {local_task_job.py:159} INFO - Task exited with return code 1
+[2025-01-23T03:06:12.807+0000] {taskinstance.py:2582} INFO - 0 downstream tasks scheduled from follow-on schedule check

@@ -1,0 +1,20 @@
+2025-01-16 16:46:09,401 - INFO - main.py -   Text processed 700 documents
+2025-01-16 16:46:09,402 - INFO - main.py -   Split sentence 0 documents
+2025-01-16 16:46:10,022 - ERROR - main.py -   Failed to process data with error: local variable 'split_sentence_records' referenced before assignment
+2025-01-16 16:46:10,046 - ERROR - main.py -   Failed to write: isinstance expected 2 arguments, got 1
+2025-01-16 16:54:05,615 - INFO - main.py -   Text processed 700 documents
+2025-01-16 16:54:05,615 - INFO - main.py -   Split sentence 0 documents
+2025-01-16 16:54:06,144 - ERROR - main.py -   Failed to process data with error: local variable 'split_sentence_records' referenced before assignment
+2025-01-16 16:54:06,169 - ERROR - main.py -   Failed to write: isinstance expected 2 arguments, got 1
+2025-01-16 17:05:07,957 - INFO - main.py -   Text processed 1050 documents
+2025-01-16 17:05:07,958 - INFO - main.py -   Split sentence 0 documents
+2025-01-16 17:05:08,489 - ERROR - main.py -   Failed to process data with error: local variable 'split_sentence_records' referenced before assignment
+2025-01-16 17:05:08,512 - ERROR - main.py -   Failed to write: isinstance expected 2 arguments, got 1
+2025-01-16 17:23:03,782 - INFO - main.py -   Text processed 1050 documents
+2025-01-16 17:23:03,783 - INFO - main.py -   Split sentence 0 documents
+2025-01-16 17:23:04,296 - ERROR - main.py -   Failed to process data with error: local variable 'split_sentence_records' referenced before assignment
+2025-01-16 17:23:04,318 - ERROR - main.py -   Failed to write: isinstance expected 2 arguments, got 1
+2025-01-16 18:00:32,629 - INFO - main.py -   Text processed 1250 documents
+2025-01-16 18:00:32,630 - INFO - main.py -   Split sentence 0 documents
+2025-01-16 18:00:33,072 - ERROR - main.py -   Failed to process data with error: local variable 'split_sentence_records' referenced before assignment
+2025-01-16 18:00:33,093 - ERROR - main.py -   Failed to write: isinstance expected 2 arguments, got 1

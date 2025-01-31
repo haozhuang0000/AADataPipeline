@@ -1,0 +1,54 @@
+[2025-01-24T01:34:20.969+0000] {taskinstance.py:1087} INFO - Dependencies all met for <TaskInstance: data_ingestion.start_ingestion scheduled__2025-01-23T00:00:00+00:00 [queued]>
+[2025-01-24T01:34:20.975+0000] {taskinstance.py:1087} INFO - Dependencies all met for <TaskInstance: data_ingestion.start_ingestion scheduled__2025-01-23T00:00:00+00:00 [queued]>
+[2025-01-24T01:34:20.976+0000] {taskinstance.py:1283} INFO - 
+--------------------------------------------------------------------------------
+[2025-01-24T01:34:20.983+0000] {taskinstance.py:1284} INFO - Starting attempt 2 of 2
+[2025-01-24T01:34:20.983+0000] {taskinstance.py:1285} INFO - 
+--------------------------------------------------------------------------------
+[2025-01-24T01:34:21.025+0000] {taskinstance.py:1304} INFO - Executing <Task(PythonOperator): start_ingestion> on 2025-01-23 00:00:00+00:00
+[2025-01-24T01:34:21.033+0000] {standard_task_runner.py:55} INFO - Started process 86220 to run task
+[2025-01-24T01:34:21.037+0000] {standard_task_runner.py:82} INFO - Running: ['***', 'tasks', 'run', 'data_ingestion', 'start_ingestion', 'scheduled__2025-01-23T00:00:00+00:00', '--job-id', '11', '--raw', '--subdir', 'DAGS_FOLDER/ingestion/news.py', '--cfg-path', '/tmp/tmp6xzqaeho']
+[2025-01-24T01:34:21.038+0000] {standard_task_runner.py:83} INFO - Job 11: Subtask start_ingestion
+[2025-01-24T01:34:21.134+0000] {logging_mixin.py:137} WARNING - /home/***/.local/lib/python3.10/site-packages/***/settings.py:249 DeprecationWarning: The sql_alchemy_conn option in [core] has been moved to the sql_alchemy_conn option in [database] - the old setting has been used, but please update your config.
+[2025-01-24T01:34:21.156+0000] {logging_mixin.py:137} WARNING - /home/***/.local/lib/python3.10/site-packages/***/utils/sqlalchemy.py:121 DeprecationWarning: The sql_alchemy_conn option in [core] has been moved to the sql_alchemy_conn option in [database] - the old setting has been used, but please update your config.
+[2025-01-24T01:34:21.181+0000] {task_command.py:389} INFO - Running <TaskInstance: data_ingestion.start_ingestion scheduled__2025-01-23T00:00:00+00:00 [running]> on host 01ffd301dd0f
+[2025-01-24T01:34:21.274+0000] {taskinstance.py:1511} INFO - Exporting the following env vars:
+AIRFLOW_CTX_DAG_OWNER=***
+AIRFLOW_CTX_DAG_ID=data_ingestion
+AIRFLOW_CTX_TASK_ID=start_ingestion
+AIRFLOW_CTX_EXECUTION_DATE=2025-01-23T00:00:00+00:00
+AIRFLOW_CTX_TRY_NUMBER=2
+AIRFLOW_CTX_DAG_RUN_ID=scheduled__2025-01-23T00:00:00+00:00
+[2025-01-24T01:34:38.758+0000] {logging_mixin.py:137} WARNING - /home/***/.local/lib/python3.10/site-packages/spacy/util.py:910 UserWarning: [W095] Model 'en_pipeline' (0.0.0) was trained with spaCy v3.2.0 and may not be 100% compatible with the current version (3.7.6). If you see errors or degraded performance, download a newer compatible model or retrain your custom model with the current spaCy version. For more details and available updates, run: python -m spacy validate
+[2025-01-24T01:35:07.992+0000] {logging_mixin.py:137} WARNING - 2025-01-24 01:35:07,992 - INFO - main.py -   Text processed 100 documents
+[2025-01-24T01:35:07.992+0000] {main.py:34} INFO - Text processed 100 documents
+[2025-01-24T01:35:08.001+0000] {logging_mixin.py:137} WARNING - 2025-01-24 01:35:08,001 - INFO - main.py -   Split sentence 100 documents
+[2025-01-24T01:35:08.001+0000] {main.py:41} INFO - Split sentence 100 documents
+[2025-01-24T01:35:08.028+0000] {milvus_client.py:658} DEBUG - Created new connection using: 3b70c961b7b14963bf898426932372a1
+[2025-01-24T01:35:08.029+0000] {logging_mixin.py:137} WARNING - /home/***/.local/lib/python3.10/site-packages/pymongo/synchronous/mongo_client.py:2554 UserWarning: MongoClient opened before fork. May not be entirely fork-safe, proceed with caution. See PyMongo's documentation for details: https://www.mongodb.com/docs/languages/python/pymongo-driver/current/faq/#is-pymongo-fork-safe-
+[2025-01-24T01:35:09.561+0000] {logging_mixin.py:137} WARNING - Processing batches: 0it [00:00, ?it/s]
+[2025-01-24T01:35:27.174+0000] {logging_mixin.py:137} WARNING - Processing batches: 1it [00:17, 17.61s/it]
+[2025-01-24T01:35:45.561+0000] {logging_mixin.py:137} WARNING - Processing batches: 2it [00:35, 18.07s/it]
+[2025-01-24T01:36:34.764+0000] {logging_mixin.py:137} WARNING - Processing batches: 3it [01:25, 32.28s/it]
+[2025-01-24T01:37:09.960+0000] {logging_mixin.py:137} WARNING - Processing batches: 4it [02:00, 33.43s/it]
+[2025-01-24T01:37:39.563+0000] {logging_mixin.py:137} WARNING - Processing batches: 5it [02:30, 32.05s/it]
+[2025-01-24T01:38:14.763+0000] {logging_mixin.py:137} WARNING - Processing batches: 6it [03:05, 33.12s/it]
+[2025-01-24T01:38:34.753+0000] {logging_mixin.py:137} WARNING - Processing batches: 7it [03:25, 28.83s/it]
+[2025-01-24T01:38:55.566+0000] {logging_mixin.py:137} WARNING - Processing batches: 8it [03:46, 26.28s/it]
+[2025-01-24T01:39:42.767+0000] {logging_mixin.py:137} WARNING - Processing batches: 9it [04:33, 32.82s/it]
+[2025-01-24T01:40:37.966+0000] {logging_mixin.py:137} WARNING - Processing batches: 10it [05:28, 39.73s/it]
+[2025-01-24T01:41:46.767+0000] {logging_mixin.py:137} WARNING - Processing batches: 11it [06:37, 48.63s/it]
+[2025-01-24T01:42:59.975+0000] {logging_mixin.py:137} WARNING - Processing batches: 12it [07:50, 56.10s/it]
+[2025-01-24T01:43:41.177+0000] {logging_mixin.py:137} WARNING - Processing batches: 13it [08:31, 51.59s/it]
+[2025-01-24T01:45:28.770+0000] {logging_mixin.py:137} WARNING - Processing batches: 14it [10:19, 68.51s/it]
+[2025-01-24T01:46:31.770+0000] {logging_mixin.py:137} WARNING - Processing batches: 15it [11:22, 66.85s/it]
+[2025-01-24T01:48:46.171+0000] {logging_mixin.py:137} WARNING - Processing batches: 16it [13:36, 87.18s/it]
+[2025-01-24T01:50:30.371+0000] {logging_mixin.py:137} WARNING - Processing batches: 17it [15:20, 92.30s/it]
+[2025-01-24T01:50:49.172+0000] {logging_mixin.py:137} WARNING - Processing batches: 18it [15:39, 70.21s/it]
+[2025-01-24T01:52:22.974+0000] {logging_mixin.py:137} WARNING - Processing batches: 19it [17:13, 77.30s/it]
+[2025-01-24T01:53:30.972+0000] {logging_mixin.py:137} WARNING - Processing batches: 20it [18:21, 74.51s/it]
+[2025-01-24T01:53:30.973+0000] {logging_mixin.py:137} WARNING - Processing batches: 20it [18:21, 55.07s/it]
+[2025-01-24T01:53:31.295+0000] {python.py:177} INFO - Done. Returned value was: None
+[2025-01-24T01:53:31.303+0000] {taskinstance.py:1322} INFO - Marking task as SUCCESS. dag_id=data_ingestion, task_id=start_ingestion, execution_date=20250123T000000, start_date=20250124T013420, end_date=20250124T015331
+[2025-01-24T01:53:31.421+0000] {local_task_job.py:159} INFO - Task exited with return code 0
+[2025-01-24T01:53:31.444+0000] {taskinstance.py:2582} INFO - 0 downstream tasks scheduled from follow-on schedule check
