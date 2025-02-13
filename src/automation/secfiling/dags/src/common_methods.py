@@ -17,15 +17,9 @@ from selenium import webdriver
 
 _ = load_dotenv(find_dotenv())
 def get_driver(isHeadless=False):
-    # chrome_options = Options()
-    # chrome_path = "C:\\Program Files\\Google\\Chrome\\Application\\chrome"
-    # chrome_options.binary_location = chrome_path
-    # driver = Driver(uc=True, headless2=isHeadless, binary_location=chrome_path) # Pass the chrome_options to the Driver
-
     options = Options()
     if isHeadless:
         options.add_argument("--headless")  # Run Chrome in headless mode
-    # remote_webdriver = 'remote_chromedriver'
     remote_webdriver = "http://remote_chromedriver:4444/wd/hub"  # Change if needed
     driver = webdriver.Remote(command_executor=remote_webdriver, options=options)
     return driver

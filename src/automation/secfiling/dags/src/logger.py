@@ -16,8 +16,6 @@ class Log(object):
         file_dir = os.path.join(os.getcwd(), "log")
 
         os.makedirs(file_dir, exist_ok=True)     
-        # if not os.path.exists(file_dir):
-            # os.mkdir(file_dir)
 
         self.file_dir = file_dir
         self.log_path = os.path.join(self.file_dir, self.name + "_" + self.log_time + ".log")

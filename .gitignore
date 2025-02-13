@@ -175,3 +175,5 @@ logs/
 
 # Downloaded datasets
 data/
+.json
+.csv
