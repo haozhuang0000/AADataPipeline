@@ -17,7 +17,10 @@ from ingestion.log import Log
 
 
 def manage_data_processing():
-    logger = Log(f"{os.path.basename(__file__)}").getlog()
+    #logger = Log(f"{os.path.basename(__file__)}").getlog()
+
+    logger = Log("data_processing").getlog()
+    logger.info("Data processing task started......")
     try:
         upsert = {}
 
@@ -25,7 +28,7 @@ def manage_data_processing():
         news_data = update_latest_news_database()
         upsert[DEFAULT_RAW_DATA_COLLECTION] = [
             article for language in news_data.values() for article in language
-        ][0]
+        ]
 
         upsert[DEFAULT_TEXT_PROCESSED_COLLECTION] = NER_TextProcessor().run(
             news_data.get("en", None)
@@ -56,4 +59,6 @@ def manage_data_processing():
     except Exception as e:
         logger.error(f"Failed to write: {e}")
         raise
+
+
 
