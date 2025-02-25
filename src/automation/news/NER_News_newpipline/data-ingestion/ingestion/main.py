@@ -46,7 +46,7 @@ def manage_data_processing():
         logger.info(
             f"Split sentence {len(upsert[DEFAULT_SENTENCE_SPLIT_COLLECTION])} documents"
         )
-
+        # upsert[DEFAULT_SENTENCE_SPLIT_COLLECTION] = []
         upsert[DEFAULT_SELECTED_SENTENCE_COLLECTION] = run_similarity_search(
             upsert[DEFAULT_SENTENCE_SPLIT_COLLECTION]
         )

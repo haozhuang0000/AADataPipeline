@@ -13,7 +13,7 @@ import Levenshtein
 import copy
 from tqdm import tqdm
 import pandas as pd
-
+from dataclasses import asdict
 
 from ingestion.db import database, create_id, upsert_record
 from ingestion.processing.Mapping.helper_functions import (
@@ -88,8 +88,8 @@ class SimilarityMapping(MilvusDB):
         for result in tqdm(find_cursor):
             sentence_split = SentenceSplitOut(
                 _id=result['_id'],
-                article_id=result['article_id'],
-                News_id=result['News_id'],
+                # article_id=result['article_id'],
+                # News_id=result['News_id'],
                 Sentence_id=result['Sentence_id'],
                 Output_sentence1=result.get('Sentence_1', []),
                 Output_sentence2=result.get('Sentence_2', []),
@@ -138,8 +138,14 @@ class SimilarityMapping(MilvusDB):
 
             input_col_ids = input_col.find({})
             check_col_ids = check_col.find({})
-            input_col_ids_list = [item._id for item in input_col_ids]
-            check_col_ids_list = [item._id for item in check_col_ids]
+
+            input_col_ids_list = []
+            check_col_ids_list = []
+            print("load data from database iterators.")
+            for item in tqdm(input_col_ids):
+                input_col_ids_list.append(item["_id"])
+            for item in tqdm(check_col_ids):
+                check_col_ids_list.append(item["_id"])
 
             clear_input_list = list(
                 set(input_col_ids_list).difference(set(check_col_ids_list))
@@ -719,7 +725,12 @@ class SimilarityMapping(MilvusDB):
         records = []
         for pair in batch:
             sub_result = self.calculate_similarity(pair, 0.9)
-            records.append(sub_result)
+            from bson import BSON
+            size = len(BSON.encode(asdict(sub_result)))
+            if size >= 16793600:  # MongoDB's 16MB limit
+                print(f"Large document found: {sub_result.Title}, size: {size}")
+            if sub_result != None and size <= 16793600:
+                records.append(sub_result)
 
         return records
 

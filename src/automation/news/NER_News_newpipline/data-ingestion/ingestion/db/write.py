@@ -6,6 +6,8 @@ from dataclasses import asdict
 from collections import OrderedDict
 from ingestion.db.mongo import db
 from tqdm import tqdm
+from ingestion.log import Log
+
 T = TypeVar("T")
 
 ## For NER Mapping
@@ -83,16 +85,26 @@ def split_iter(list1: list[T], batch_num: int) -> Generator[list[T], None, None]
 #     collection.bulk_write(operations, ordered=False)
 
 def bulk_insert(collection, collection_name, data: list[T]):
+    logger = Log("data_processing").getlog()
     if any(isinstance(i, list) for i in data):
         data = [item for sublist in data for item in sublist]
+
+    inserted_count = 0
+    skipped_duplicates = 0
+    failed_count = 0
 
     for record in tqdm(data, desc=f"Inserting data into {collection_name}"):
         try:
             collection.insert_one(asdict(record))
+            inserted_count += 1
         except errors.DuplicateKeyError:
-            pass  # Ignore and continue inserting others
+            skipped_duplicates += 1  # Ignore and continue inserting others
         except Exception as e:
-            raise Exception(f"MongoInsert: {e}")
+            failed_count += 1
+            logger.error(f"MongoInsert Error in {collection_name}: {e}")
+
+    logger.info(
+        f"{collection_name} - Inserted: {inserted_count}, Duplicates Skipped: {skipped_duplicates}, Failed: {failed_count}")
 
 def batch_upsert(collection_name: str | Collection, data: list[T]):
     if not isinstance(data, list):
