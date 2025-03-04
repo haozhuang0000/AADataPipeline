@@ -197,13 +197,14 @@ class NER_TextProcessor(NER_Ruler):
             # "article_id": record.article_id,
             # "News_id": record._id,
             "Title": record.Title,
-            "Date": record.Date,
+            "Date": record.Date.split(" ")[0],
             "Content": text,
             "Category": record.Category,
             "Search_q": record.Search_q,
             "Sentence_list": sentence_list,
             "Companies_list": companies_list,
             "Econs_list": econs_list,
+            "Source": record.Source,
         }
         return NEROut(**ner_dict)
 
