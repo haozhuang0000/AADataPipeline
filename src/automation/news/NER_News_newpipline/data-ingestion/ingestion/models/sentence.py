@@ -13,6 +13,7 @@ class SentenceSplit:
     Sentence_id: list[str]
     Sentence_1: list[str]
     Sentence_2: list[str]
+    Source: dict
 
     def to_out_format(self) -> 'SentenceSplitOut':
         return SentenceSplitOut(
@@ -25,6 +26,7 @@ class SentenceSplit:
             Companies_econs=self.Companies_econs,
             Date=self.Date,
             Title=self.Title,
+            Source=self.Source,
         )
 
 @dataclass
@@ -38,6 +40,7 @@ class SentenceSplitOut:
     Sentence_id: list[str]
     Output_sentence1: list[str]
     Output_sentence2: list[str]
+    Source: dict
 
     def __post_init__(self):
         if isinstance(self.Companies_econs, dict):

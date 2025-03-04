@@ -204,6 +204,7 @@ class NER_TextProcessor(NER_Ruler):
             "Sentence_list": sentence_list,
             "Companies_list": companies_list,
             "Econs_list": econs_list,
+            "Source": record.Source,
         }
         return NEROut(**ner_dict)
 

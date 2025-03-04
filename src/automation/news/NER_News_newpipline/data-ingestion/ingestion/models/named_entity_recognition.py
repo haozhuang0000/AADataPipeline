@@ -15,6 +15,7 @@ class NEROut:
     Sentence_list: list[str]
     Companies_list: list[str]
     Econs_list: list[str]
+    Source: dict
 
 
 @dataclass

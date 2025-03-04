@@ -101,6 +101,7 @@ class NerOutputProcessor:
             "Sentence_id": sentence_id,
             "Sentence_1": sentence_1,
             "Sentence_2": sentence_2,
+            "Source": record.Source,
         }
 
 

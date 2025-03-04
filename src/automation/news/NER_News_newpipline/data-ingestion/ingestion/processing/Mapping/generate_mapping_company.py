@@ -95,7 +95,8 @@ class SimilarityMapping(MilvusDB):
                 Output_sentence2=result.get('Sentence_2', []),
                 Companies_econs=result['Companies_econs'],
                 Date=result['Date'],
-                Title=result['Title']
+                Title=result['Title'],
+                Source=result['Source'],
             )
             results.append(sentence_split)
         return results
