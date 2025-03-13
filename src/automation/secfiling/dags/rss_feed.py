@@ -8,7 +8,12 @@ import re
 import argparse
 from utils import *
 import warnings
+import json
+from concurrent.futures import ThreadPoolExecutor, as_completed
+import time
+from ratelimit import limits, sleep_and_retry
 warnings.simplefilter(action='ignore', category=pd.errors.SettingWithCopyWarning)
+
 
 def processing_compstats():
     code_path = os.getcwd()
@@ -43,6 +48,7 @@ def parse_sec_edgar_rss(cik):
     """Fetches and parses the SEC EDGAR RSS feed for a given CIK."""
     rss_url = f"https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK={cik}&type=&dateb=&owner=exclude&start=0&count=100&output=atom"
     response = requests.get(rss_url, headers=headers)
+    # response = limited_request(rss_url, headers)
 
     if response.status_code == 403:
         print("Access blocked. Ensure your User-Agent string is set correctly.")
@@ -182,7 +188,10 @@ def get_article_contents(url, url_txt, cik, reporting_date, df_compstat_cik):
         data_txt.filing_date = data_txt.filing_date.astype(str)
         data_txt.datadate = data_txt.datadate.astype(str).replace('NaT', '')
         data_txt = data_txt.fillna('')
-        data_txt = data_txt[['_id', 'cik', 'gvkey', 'tic', 'conm', 'filing_date', 'fyear', 'fmonth', 'fyear_fqtr', 'type', 'content']]
+        if type_ == "10-K":
+            data_txt = data_txt[['_id', 'cik', 'gvkey', 'tic', 'conm', 'filing_date', 'fyear', 'fmonth', 'type', 'content']]
+        else:
+            data_txt = data_txt[['_id', 'cik', 'gvkey', 'tic', 'conm', 'filing_date', 'fyear', 'fmonth', 'fyear_fqtr', 'type', 'content']]
         insert_db_one(data_txt, col_name=col_name, dbs_name=db_name)
 
         ## HTML
@@ -230,8 +239,13 @@ def main(cik, df_compstat):
         cik = href['cik']
         filing_date = href['filing_date']
         get_article_contents(url, url_txt, cik, filing_date, df_compstat)
+        
 
-
+def process_company(cik, df_compstat):
+    try:
+        main(cik, df_compstat)
+    except Exception as e:
+        logger.error(f"Error processing CIK {cik}: {e}")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -255,14 +269,28 @@ if __name__ == "__main__":
     target_base_url = 'http://www.sec.gov'
     target_filings = ['10-K']
 
-    limit_date = "2022-01-01"
-    cik = "0000320193"  # Apple Inc. CIK as an example
-
+    ## MongoDB specifications
     col_name = 'Level1_10K_rss_feed'
-    db_name = "AIDF_AlternativeData"
+    # db_name = "AIDF_AlternativeData"
+    db_name = "AIDF_NLP_Capstone_Temp"
 
     col_name_HTML = 'Level1_10K_rss_feed_html'
-    db_name_HTML = "AIDF_AlternativeData"
+    # db_name_HTML = "AIDF_AlternativeData"
+    db_name_HTML = "AIDF_NLP_Capstone_Temp"
+    
+    ## Set date limit for sec filings
+    limit_date = args.date
 
+    ## Process compstat
     df_compstat = processing_compstats()
-    main(cik, df_compstat)
+    
+    ## get all cik
+    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'comp_cik_full.json'), "r") as json_file:
+        TickerFile = json.load(json_file)
+
+    for cik in list(TickerFile.keys()):
+        process_company(cik, df_compstat) 
+
+
+
+
