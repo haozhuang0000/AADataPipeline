@@ -11,7 +11,7 @@ _ = load_dotenv(find_dotenv())
 
 def connect_db(dbs='AIDF_NLP_Capstone'):
 
-    DB_URL = os.environ['LOCAL_URL']
+    DB_URL = os.environ['MONGO_URL']
     client = MongoClient(DB_URL)
     db = client[dbs]
     return db
@@ -109,8 +109,10 @@ def process_SECfiling_Compstat(df_10k, df_compstat, sec_type):
         df_out = df_10k.merge(df_compstat, on=['cik', 'year_10k'], how='left')
         # df_out = df_out.rename(columns={'fyear': 'year_10k'})
         df_out['fyear'] = df_out.apply(lambda x: _compute_fyear(x), axis=1)
-        df_out['fyear_fqtr'] = ''
+        # df_out['fyear_fqtr'] = ''
         df_out = df_out.drop(columns=['year_10k'])
+
+        df_out = df_out.apply(postprocess_SECfiling_Compstat, axis=1, args=(df_compstat,))
 
     elif sec_type == '10-Q':
 
@@ -163,3 +165,26 @@ def process_SECfiling_Compstat(df_10k, df_compstat, sec_type):
         df_out = df_out.drop(columns=['year_10k', 'fqtr'])
 
     return df_out
+
+
+def postprocess_SECfiling_Compstat(row, df_compstat):
+    ## In this function, we fill in the missing columns for companies
+    ## where the tic, gvkey etc are missing after merging the 
+    ## filings with compstat (Since compstat is not updated)
+    if pd.isna(row["gvkey"]):
+        match = df_compstat[df_compstat['cik'] == row["cik"]]
+        if not match.empty:
+            row["gvkey"] = match["gvkey"].iloc[0]
+            row["tic"] = match["tic"].iloc[0]
+            row["conm"] = match["conm"].iloc[0]
+
+            filing_date_year = pd.to_datetime(row["filing_date"]).year
+            match_filing_date_year = pd.to_datetime(match["datadate"].iloc[0]).year
+
+            match_fyear = int(match["fyear"].iloc[0])
+            year_diff = match_filing_date_year - match_fyear
+            row["fyear"] = filing_date_year - year_diff
+            row["fmonth"] = match["fmonth"].iloc[0]
+
+    return row
+        

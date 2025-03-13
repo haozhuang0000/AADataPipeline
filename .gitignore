@@ -53,3 +53,17 @@ tags
 .idea/
 venv
 nlp
+
+# Data
+*.csv
+*.json
+
+# Airflow
+airflow.cfg
+logs/
+dags/__pycache__/
+dags/*.pyc
+dags/*.pyo
+airflow.db
+airflow.db-journal
+*.log
